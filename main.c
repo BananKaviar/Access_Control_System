@@ -3,9 +3,11 @@
 #include <ctype.h>    
 #include <stdlib.h>   
 #include <stdio.h>  
+#include <windows.h>
 
 #include "safeinput.h"
 #include "adminMenu.h"
+
 
 typedef struct {
     int cardNumber;
@@ -35,14 +37,7 @@ typedef struct{
     int count;
 } CARDSLIST;
 
-int findCard(Card listOfCards[], int totalCards, int cardNumber) {
-    for (int i = 0; i < totalCards; i++) {
-        if (listOfCards[i].cardNumber == cardNumber) {
-            return i; // Found
-        }
-    }
-    return -1; // Not found
-}
+
 
 int main(){
     CARDSLIST listOfCards;
@@ -65,6 +60,13 @@ int main(){
         }
 
         switch(selection){
+
+            case 1:
+            printf("The green light turns ON!\n");
+            Sleep(3000);
+            printf("The door is open Välkommen!\n");
+            break;
+
             case 3:
 
                 if (listOfCards.count == 0) {
@@ -74,13 +76,6 @@ int main(){
                     listOfCards.allCards = realloc(listOfCards.allCards,newSize);
                 }
                 
-                int index = findCard();
-                if index
-
-                
-
-            
-
                 createNew(&listOfCards.allCards[listOfCards.count]);
 
                 listOfCards.count++ ;
@@ -130,13 +125,15 @@ int main(){
                 
             //     break;
 
+
             case 2:
                 printf("List all\n");
 
                 for(int i = 0; i < listOfCards.count;i++){
                     printf("Number: %d\n", listOfCards.allCards[i].cardNumber);
                     printf("Creation date: %d\n", listOfCards.allCards[i].creationDate);
-                }
+
+                 }
 
              printf("The employee count:%d\n", listOfCards.count);
 
@@ -153,7 +150,7 @@ int main(){
             int searchId;
 
             printf("Enter the employee card number: ");
-            scanf(" %d", &searchId);
+            scanf("%d", &searchId);
             
             int foundIndex = -1;
 
@@ -173,7 +170,7 @@ int main(){
             }
             
         
-                return 0;
+                break;
 
         }
     }

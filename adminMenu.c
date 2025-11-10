@@ -13,6 +13,7 @@ void AdminMenu(){
         printf("3. Add/remove access\n"); // DONE
         printf("4. Exit\n"); // DONE
         printf("9. Fake test scan card\n"); // FUNCTION THAT TAKE S A CARD STRUCT (OR DECLARED A CARD STRUCT), CHECK IF listOfCards has the same id number, returns rue if it does, false otherwise
+}
         // printf("Select option:");       
         
         // int option;
@@ -38,7 +39,7 @@ void AdminMenu(){
         // }
 
     // }
-}
+
 
 // int main(void) {
 //     AdminMenu();
