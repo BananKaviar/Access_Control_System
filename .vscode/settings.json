@@ -1,0 +1,9 @@
+{
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "c:\\Users\\alfre\\banankaviar\\C\\Deluppgift",
+            "binaryPath": "c:\\Users\\alfre\\banankaviar\\C\\Deluppgift\\main.exe",
+            "binaryArgs": []
+        }
+    ]
+}
