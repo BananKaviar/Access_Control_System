@@ -1,11 +1,16 @@
+#include <stdlib.h>   
+#include <stdio.h>  
+#include <windows.h>
+#include <stdbool.h>
+
+
 typedef struct {
     int cardNumber;
     int creationDate;
-    int start;
-    int end;
-} Card;
+    bool accessStatus;
+}Card;
 
-typedef struct {
-    Card *allCards;
+typedef struct{
+    Card *allCards; 
     int count;
-} CardList;
+} CARDSLIST;

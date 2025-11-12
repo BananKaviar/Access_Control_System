@@ -5,14 +5,8 @@
 #include <windows.h>
 #include <stdbool.h>
 
+#include "safeinput.h"
+#include "adminMenu.h"
 #include "cards.h"
-
-int cards(){
-    Card cards[10];
-
-    cards[0].cardNumber = 0001;
-    cards[0].creationDate = 201018;
-    cards[0].
-}
 
 

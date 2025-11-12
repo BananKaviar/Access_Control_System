@@ -1,26 +1,41 @@
-PROG=main.exe
-# CC=gcc
-DEPS=adminMenu.h safeinput.h main.h
-SOURCES=main.c adminMenu.c safeinput.c cards.c
-CFLAGS=-Wall -Werror -g
-OUTPUTDIR=obj
-OBJS = $(addprefix $(OUTPUTDIR)/, $(SOURCES:.c=.o))
+# Use MSYS2/Git Bash shell
+SHELL := /usr/bin/sh
 
+# Compiler + flags
+CC := gcc
+CFLAGS := -Wall -Werror -g
+
+# Program + folders
+PROG := main.exe
+OUTPUTDIR := obj
+
+# Only include headers that actually exist
+DEPS := adminMenu.h safeinput.h 
+
+# Only list .c files that exist
+SOURCES := main.c adminMenu.c safeinput.c 
+
+# Object list in obj/
+OBJS := $(addprefix $(OUTPUTDIR)/,$(SOURCES:.c=.o))
+
+# Default target
 all: $(OUTPUTDIR) $(PROG)
 
-$(PROG): $(OBJS) 
-	$(CC) -o $@ $^ $(CFLAGS)
+# Link step
+$(PROG): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@
 
+# Compile step (pattern rule)
 $(OUTPUTDIR)/%.o: %.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-
+# Ensure obj folder exists
 $(OUTPUTDIR):
-	@mkdir "$(OUTPUTDIR)"
+	@mkdir -p "$(OUTPUTDIR)"
 
+# Cross-shell clean (works in Git Bash)
 clean:
-	@del /q "$(OUTPUTDIR)" 
-	@del /q $(PROG)
+	@rm -rf "$(OUTPUTDIR)"
+	@rm -f "$(PROG)"
 
-
-.PHONY: prep clean
+.PHONY: all clean
