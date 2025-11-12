@@ -3,6 +3,7 @@
 #include <stdlib.h>   
 #include <stdio.h>  
 #include <windows.h>
+#include <stdbool.h>
 
 #include "cards.h"
 
@@ -11,7 +12,7 @@ int cards(){
 
     cards[0].cardNumber = 0001;
     cards[0].creationDate = 201018;
-    
+    cards[0].
 }
 
 

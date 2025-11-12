@@ -27,7 +27,9 @@ void createNew(Card *newCard){
     
     GetInputInt("Enter Card number:",&newCard->cardNumber);
 
-    GetInputInt("Type 1 to give access and type 2 to remove access",&newCard ->accessStatus);
+    int accessChoice = 0;
+    GetInputInt("Type 1 to give access, 0 to remove access: ", &accessChoice);
+    newCard->accessStatus = (accessChoice != 0);
     
 }
 
@@ -69,126 +71,42 @@ int main(){
                 break;
 
 
-            case 3: 
-            createNew(&listOfCards.allCards[listOfCards.count]);
-            if()
-
-            
-            
-
-
-
-            // case 3:
-            //     createNew(&listOfCards.allCards[listOfCards.count]);
-                
-            //     printf("do we reach here?");
-            //     int found =-1;
-            //     for (int i = 0; i< listOfCards.count; i++){
-            //         if(listOfCards.allCards[i].cardNumber == listOfCards.allCards[listOfCards.count].cardNumber){
-            //             found = i;
-            //         }
-            //     }
-            //     if (found != -1){
-            //         char answer;
-            //         GetInputChar("This card already exists. Do you want to delete it? (y/n): ", &answer);
-
-            //         if (answer == 'y' || answer == 'Y'){
-            //             for (int j = found; j < listOfCards.count-1; j++){
-            //                 listOfCards.allCards[j] = listOfCards.allCards[j+1];
-            //             }
-            //             listOfCards.count--;
-            //             printf("Card removed!\n");
-            //         } else { 
-            //             printf ("No changes were made\n");
-            //         }
-            //     } else {
-            //         if(listOfCards.count == 0){
-            //             listOfCards.allCards = malloc(sizeof(Card));
-            //         } else {
-            //             int newsize = (listOfCards.count + 1)* sizeof(Card);
-            //             listOfCards.allCards = realloc(listOfCards.allCards, newsize);
-            //         }
-            //         listOfCards.count++;
-
-            //         printf("The employee count: %d \n", listOfCards.count);
-            //     }
-
-            //     break;
-
-
-
-
-                // int choice;
+            case 3: {
         
-                // GetInputInt("Enter 1 for adding and 2 for removing access",&choice);
+             Card tmp;
+             createNew(&tmp);
 
-                // if(choice==1) {
+            int found = -1;
+            for (int i = 0; i < listOfCards.count; i++) {
+                if (listOfCards.allCards[i].cardNumber == tmp.cardNumber) {
+                    found = i;
+                    break;
+                }
+            }
 
-                //     if (listOfCards.count == 0) {
-                //         listOfCards.allCards = malloc(sizeof(Card));
-                //     } else {
-                //         int newSize = (listOfCards.count + 1) * sizeof(Card);
-                //         listOfCards.allCards = realloc(listOfCards.allCards,newSize);
-                //     }
+                if (found != -1) {
                     
-                //     createNew(&listOfCards.allCards[listOfCards.count]);
+                    listOfCards.allCards[found].accessStatus = tmp.accessStatus;
 
-                //     listOfCards.count++ ;
+                    printf("Updated card %d: access is now %s.\n",
+                        tmp.cardNumber,
+                        listOfCards.allCards[found].accessStatus ? "ON" : "OFF");
+                } else {
+      
+                    if (listOfCards.count == 0) {
+                        listOfCards.allCards = (Card*)malloc(sizeof(Card));
+                    } else {
+                        int newSize = (listOfCards.count + 1) * (int)sizeof(Card);
+                        listOfCards.allCards = (Card*)realloc(listOfCards.allCards, newSize);
+                    }
 
-                //     printf("The employee count:%d\n", listOfCards.count);
+                    listOfCards.allCards[listOfCards.count] = tmp;
+                    listOfCards.count++;
 
-                   
-                // } else if (choice == 2) {
-                    
-                //     int searchID;
-                //     GetInputInt("Enter Card number to be removed: ",&searchID);
-
-                //     int foundId = -1;
-
-                //     int Cardsize= listOfCards.count;
-
-                //     for (int i= 0; i<Cardsize; i++){
-                //         if(listOfCards.allCards->cardNumber == searchID){
-                //             foundId = i;
-                //             break;
-
-                //         } else {
-                //             foundId= -1;
-                //         }
-                //     }
-                    
-                //     if (foundId == -1)
-                //     printf("not found");
-                //     else
-                //     printf("found!");
-
-                //     int removeCard = (listOfCards.count - 1)* sizeof(Card);
-                //     listOfCards.allCards= realloc(listOfCards.allCards, removeCard);
-                // }
-
-                // break;
-
-
-            //     createNew(&listOfCards.allCards[listOfCards.count]);
-            //     listOfCards.count-- ;
-            //     printf("The employee count: %d\n", listOfCards.count);
-            // } else {
-            //     printf("Error!");
-            //     break;
-            // }
-
-        
-
-             
-            //     break;
-            
-
-            //     createNew(&listOfCards.allCards[listOfCards.count]);
-            //     listOfCards.count++ ;
-            //     printf("The employee count:%d\n", listOfCards.count);
-                
-            //     break;
-
+                    printf("Added card %d. Employee count: %d\n", tmp.cardNumber, listOfCards.count);
+                }
+                break;
+                }
 
             case 2:
                 printf("List all\n");
