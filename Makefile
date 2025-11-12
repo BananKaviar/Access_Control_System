@@ -1,7 +1,7 @@
 PROG=main.exe
 # CC=gcc
-DEPS=adminMenu.h safeinput.h 
-SOURCES=main.c adminMenu.c safeinput.c 
+DEPS=adminMenu.h safeinput.h main.h
+SOURCES=main.c adminMenu.c safeinput.c cards.c
 CFLAGS=-Wall -Werror -g
 OUTPUTDIR=obj
 OBJS = $(addprefix $(OUTPUTDIR)/, $(SOURCES:.c=.o))
