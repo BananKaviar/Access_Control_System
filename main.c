@@ -8,15 +8,16 @@
 
 #include "safeinput.h"
 #include "adminMenu.h"
+#include "cards.h"
+#include <time.h> 
+
+#define COLOR_RED     "\x1b[31m"
+#define COLOR_GREEN   "\x1b[32m"
+#define COLOR_RESET   "\x1b[0m"
 
 
-typedef struct {
-    int cardNumber;
-    int creationDate;
-    bool accessStatus;
-}Card;
-//add access to each card
-//I am creating a struct to assign the card with necessary information
+
+
 
 
 
@@ -30,6 +31,26 @@ void createNew(Card *newCard){
     int accessChoice = 0;
     GetInputInt("Type 1 to give access, 0 to remove access: ", &accessChoice);
     newCard->accessStatus = (accessChoice != 0);
+
+    int shiftChoice = 0;
+    printf("Select time shift:\n");
+    printf(" 1. Morning shift\n");
+    printf(" 2. Afternoon shift\n");
+    printf(" 3. Night shift\n");
+    printf(" 4. Admin (always access)\n");
+    GetInputInt("Enter shift (1-4):",&shiftChoice);
+
+    switch (shiftChoice) {
+        case 1: newCard->shift = SHIFT_MORNING;    break;
+        case 2: newCard->shift = SHIFT_AFTERNOON;  break;
+        case 3: newCard->shift = SHIFT_EVENING;      break;
+        case 4: newCard->shift = SHIFT_ALWAYS;      break;
+        default:
+            printf("Invalid choice, defaulting to Morning shift.\n");
+            newCard->shift = SHIFT_MORNING;
+            break;
+    }
+    
     
 }
 
@@ -65,7 +86,7 @@ int main(){
         switch(selection){
 
             case 1:
-                printf("The green light turns ON!\n");
+                printf("The light turns ON it is: " COLOR_GREEN "Green" COLOR_RESET "\n");
                 Sleep(3000);
                 printf("The door is open Välkommen!\n");
                 break;
@@ -103,7 +124,7 @@ int main(){
                     listOfCards.allCards[listOfCards.count] = tmp;
                     listOfCards.count++;
 
-                    printf("Added card %d. Employee count: %d\n", tmp.cardNumber, listOfCards.count);
+                    printf("Added card %d. Employee count: %d\n", tmp.cardNumber, 10+listOfCards.count);
                 }
                 break;
                 }
@@ -111,13 +132,18 @@ int main(){
             case 2:
                 printf("List all\n");
 
+                 for (int i = 0; i < 10; i++) {
+                    printf("Number: %d\n", cards[i].cardNumber);
+                    printf("Creation date: %d\n", cards[i].creationDate);
+                 }
+
                 for(int i = 0; i < listOfCards.count;i++){
                     printf("Number: %d\n", listOfCards.allCards[i].cardNumber);
                     printf("Creation date: %d\n", listOfCards.allCards[i].creationDate);
 
                  }
 
-             printf("The employee count:%d\n", listOfCards.count);
+             printf("The employee count:%d\n", 10 +listOfCards.count);
 
                 break;
 
@@ -126,37 +152,51 @@ int main(){
 
                 break;
         
-            case 9:
-                int size = sizeof(listOfCards.allCards)/sizeof(listOfCards.count);
-
+            case 9: {
                 int searchId;
+                GetInputInt("Enter Card number to test scan: ", &searchId);
 
-                GetInputInt("Enter Card number to be removed: ",&searchId);
-            
-                int foundIndex = -1;
+                const Card *foundCard = NULL;
 
-                for (int i= 0; i<size; i++){
-                    if(listOfCards.allCards->cardNumber == searchId){
-                        foundIndex = i;
+                for (int i = 0; i < 10; i++) {
+                    if (cards[i].cardNumber == searchId) {
+                        foundCard = &cards[i];
                         break;
-
                     }
                 }
 
-                if (foundIndex != -1){
-                    printf("Found card id in system! created on %d\n", listOfCards.allCards->creationDate);
-                    
-                } else {
-                    printf("Employee with cardnumber %d not found.\n", searchId);
+                if (foundCard == NULL) {
+                    for (int i = 0; i < listOfCards.count; i++) {
+                        if (listOfCards.allCards[i].cardNumber == searchId) {
+                            foundCard = &listOfCards.allCards[i];
+                            break;
+                        }
+                    }
                 }
-            
-        
+
+                if (foundCard == NULL) {
+                    printf("Card %d not in system.\n", searchId);
+                    printf("CURRENTLY LAMP IS: " COLOR_RED "Red" COLOR_RESET " \n");
+                    break;
+                }
+
+                if (CardHasAccessNow(foundCard)) {
+                    printf("Card %d FOUND! Created %d\n",
+                        foundCard->cardNumber, foundCard->creationDate);
+
+                    printf("The light turns ON it is: " COLOR_GREEN "Green" COLOR_RESET "\n");
+                } else {
+                    printf("Card %d FOUND, but NO ACCESS at this time.\n",
+                        foundCard->cardNumber);
+
+                    printf("CURRENTLY LAMP IS: Red\n");
+                }
+
                 break;
-
+            }
         }
-    }
 
-    return 0;
+    }
 }
 
 
