@@ -10,10 +10,10 @@ PROG := main.exe
 OUTPUTDIR := obj
 
 # Only include headers that actually exist
-DEPS := adminMenu.h safeinput.h cards.h
+DEPS := adminMenu.h safeinput.h cards.h cards_storage.h
 
 # Only list .c files that exist
-SOURCES := main.c adminMenu.c safeinput.c cards.c
+SOURCES := main.c adminMenu.c safeinput.c cards.c cards_storage.c
 
 # Object list in obj/
 OBJS := $(addprefix $(OUTPUTDIR)/,$(SOURCES:.c=.o))

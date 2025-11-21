@@ -11,18 +11,7 @@
 #include "cards.h"
 
 
-Card cards[10] = {
-    {1, 201312, true, SHIFT_ALWAYS},
-    {2, 201401, true,SHIFT_AFTERNOON},
-    {3, 201402, false,SHIFT_EVENING},
-    {4, 201403, true,SHIFT_MORNING},
-    {5, 201404, true,SHIFT_AFTERNOON},
-    {6, 201405, false, SHIFT_EVENING},
-    {7, 201406, true, SHIFT_MORNING},
-    {8, 201407, false, SHIFT_AFTERNOON},
-    {9, 201408, true, SHIFT_EVENING},
-    {10, 201409, true, SHIFT_MORNING}
-};
+
 
 TimeShift GetCurrentTimeShift(void)
 {

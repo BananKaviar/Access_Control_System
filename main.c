@@ -10,12 +10,11 @@
 #include "adminMenu.h"
 #include "cards.h"
 #include <time.h> 
+#include "cards_storage.h"
 
 #define COLOR_RED     "\x1b[31m"
 #define COLOR_GREEN   "\x1b[32m"
 #define COLOR_RESET   "\x1b[0m"
-
-
 
 
 
@@ -65,8 +64,29 @@ typedef struct{
 
 int main(){
     CARDSLIST listOfCards;
-    listOfCards.count = 0;
-    listOfCards.allCards = NULL;
+    loadCardsFromFile("cards.db", &listOfCards.allCards, &listOfCards.count);
+
+    if (listOfCards.count == 0) {
+    printf("No cards found on disk — loading default 10 cards.\n");
+
+    Card defaultCards[10] = {
+        {1, 201312, true, SHIFT_ALWAYS},
+        {2, 201401, true, SHIFT_MORNING},
+        {3, 201402, false, SHIFT_MORNING},
+        {4, 201403, true, SHIFT_AFTERNOON},
+        {5, 201404, true, SHIFT_AFTERNOON},
+        {6, 201405, false, SHIFT_EVENING},
+        {7, 201406, true, SHIFT_EVENING},
+        {8, 201407, false, SHIFT_MORNING},
+        {9, 201408, true, SHIFT_AFTERNOON},
+        {10, 201409, true, SHIFT_EVENING}
+    };
+
+    listOfCards.count = 10;
+    listOfCards.allCards = malloc(sizeof(Card) * 10);
+    memcpy(listOfCards.allCards, defaultCards, sizeof(defaultCards));
+}
+
 
     while(true){
         AdminMenu();
@@ -124,33 +144,30 @@ int main(){
                     listOfCards.allCards[listOfCards.count] = tmp;
                     listOfCards.count++;
 
-                    printf("Added card %d. Employee count: %d\n", tmp.cardNumber, 10+listOfCards.count);
+                    printf("Added card %d. Employee count: %d\n", tmp.cardNumber, listOfCards.count);
                 }
                 break;
                 }
 
             case 2:
-                printf("List all\n");
+              printf("List all\n");
 
-                 for (int i = 0; i < 10; i++) {
-                    printf("Number: %d\n", cards[i].cardNumber);
-                    printf("Creation date: %d\n", cards[i].creationDate);
-                 }
+                for (int i = 0; i < listOfCards.count; i++) {
+                Card c = listOfCards.allCards[i];
 
-                for(int i = 0; i < listOfCards.count;i++){
-                    printf("Number: %d\n", listOfCards.allCards[i].cardNumber);
-                    printf("Creation date: %d\n", listOfCards.allCards[i].creationDate);
+            printf("Number: %d\n", c.cardNumber);
+            printf("Creation date: %d\n", c.creationDate);
+                }
 
-                 }
+            printf("The employee count: %d\n", listOfCards.count);
 
-             printf("The employee count:%d\n", 10 +listOfCards.count);
-
-                break;
+            break;
 
             case 4:
+                saveCardsToFile("cards.db", listOfCards.allCards, listOfCards.count);
+                printf("Cards saved. Goodbye!\n");
                 free(listOfCards.allCards);
-
-                break;
+                exit(0);
         
             case 9: {
                 int searchId;
@@ -158,12 +175,6 @@ int main(){
 
                 const Card *foundCard = NULL;
 
-                for (int i = 0; i < 10; i++) {
-                    if (cards[i].cardNumber == searchId) {
-                        foundCard = &cards[i];
-                        break;
-                    }
-                }
 
                 if (foundCard == NULL) {
                     for (int i = 0; i < listOfCards.count; i++) {

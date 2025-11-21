@@ -2,6 +2,9 @@
 #include <stdio.h>  
 #include <windows.h>
 #include <stdbool.h>
+#ifndef CARDS_H
+#define CARDS_H
+
 
 typedef enum{
     SHIFT_MORNING,  //from 0600-1400
@@ -19,10 +22,12 @@ typedef struct {
 }Card;
 
 
-extern Card cards[10];
+
 
 void showAllCards(void);
 
 TimeShift GetCurrentTimeShift(void);
 bool CardHasAccessNow(const Card *card);
+
+#endif
 
