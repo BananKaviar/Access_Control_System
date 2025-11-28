@@ -31,6 +31,16 @@ void createNew(Card *newCard){
     GetInputInt("Type 1 to give access, 0 to remove access: ", &accessChoice);
     newCard->accessStatus = (accessChoice != 0);
 
+
+    if (newCard->accessStatus) {
+    
+    GetInputInt("Enter time shift (HHMM-HHMM): ", &newCard->shift);
+    } else {
+    
+    newCard->shift = 0;
+    }
+
+
     int shiftChoice = 0;
     printf("Select time shift:\n");
     printf(" 1. Morning shift\n");
@@ -56,7 +66,7 @@ void createNew(Card *newCard){
 
 
 typedef struct{
-    Card *allCards; // this struct is more for listing all cards it stores and keeps a count on them
+    Card *allCards; 
     int count;
 } CARDSLIST;
 
@@ -211,5 +221,5 @@ int main(){
 }
 
 
-// function that takes an id and returns true if the id is in the system
+
 

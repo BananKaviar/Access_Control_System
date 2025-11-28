@@ -31,12 +31,12 @@ TimeShift GetCurrentTimeShift(void)
 
 bool CardHasAccessNow(const Card *card)
 {
-    // If access flag is off, never allow
+    
     if (!card->accessStatus) {
         return false;
     }
 
-    // Admin cards always have access
+    
     if (card->shift == SHIFT_ALWAYS) {
         return true;
     }

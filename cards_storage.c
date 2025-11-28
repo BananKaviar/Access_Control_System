@@ -7,7 +7,7 @@ void loadCardsFromFile(const char *filename, Card **cards, int *count)
 {
     FILE *f = fopen(filename, "r");
     if (!f) {
-        // File doesn't exist → start with empty list
+        
         *cards = NULL;
         *count = 0;
         return;
@@ -19,7 +19,7 @@ void loadCardsFromFile(const char *filename, Card **cards, int *count)
 
     *cards = (Card *)malloc(sizeof(Card) * total);
        for (int i = 0; i < total; i++) {
-        int statusInt, shiftInt;  // add these temps
+        int statusInt, shiftInt;  
 
         fscanf(f, "%d %d %d %d",
                &(*cards)[i].cardNumber,
@@ -42,10 +42,10 @@ void saveCardsToFile(const char *filename, Card *cards, int count)
         return;
     }
 
-    // Write number of cards
+    
     fprintf(f, "%d\n", count);
 
-    // Write each card
+    
     for (int i = 0; i < count; i++) {
         fprintf(f, "%d %d %d %d\n",
                 cards[i].cardNumber,
