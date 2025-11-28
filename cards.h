@@ -11,6 +11,7 @@ typedef enum{
     SHIFT_AFTERNOON, //from 1400-2200
     SHIFT_EVENING, //from 2200-0600
     SHIFT_ALWAYS, //24X7 access
+    SHIFT_NONE, //NO ACCESS
 }TimeShift;
 
 

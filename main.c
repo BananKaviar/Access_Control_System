@@ -17,51 +17,35 @@
 #define COLOR_RESET   "\x1b[0m"
 
 
-
-
-
 void createNew(Card *newCard){
     printf("Create a new card: \n");
 
     GetInputInt("Enter Creation date in the format (YYMMDD): ", &newCard->creationDate);  
-    
-    GetInputInt("Enter Card number:",&newCard->cardNumber);
+
+    GetInputInt("Enter Card number: ", &newCard->cardNumber);
 
     int accessChoice = 0;
     GetInputInt("Type 1 to give access, 0 to remove access: ", &accessChoice);
     newCard->accessStatus = (accessChoice != 0);
 
-
     if (newCard->accessStatus) {
-        int shiftInput = 0;
-        GetInputInt("Enter time shift (HHMM-HHMM): ", &shiftInput);
-        newCard->shift = (TimeShift)shiftInput;
+
+        printf("Choose time shift:\n");
+        printf("0 = Morning (06-14)\n");
+        printf("1 = Afternoon (14-22)\n");
+        printf("2 = Evening (22-06)\n");
+        printf("3 = Always (24/7)\n");
+
+        int tmpShift;
+        GetInputInt("Enter shift (0-3): ", &tmpShift);
+
+        
+        newCard->shift = (TimeShift)tmpShift;
+
     } else {
-    
-    newCard->shift = 0;
+        
+        newCard->shift = SHIFT_NONE; 
     }
-
-
-    int shiftChoice = 0;
-    printf("Select time shift:\n");
-    printf(" 1. Morning shift\n");
-    printf(" 2. Afternoon shift\n");
-    printf(" 3. Night shift\n");
-    printf(" 4. Admin (always access)\n");
-    GetInputInt("Enter shift (1-4):",&shiftChoice);
-
-    switch (shiftChoice) {
-        case 1: newCard->shift = SHIFT_MORNING;    break;
-        case 2: newCard->shift = SHIFT_AFTERNOON;  break;
-        case 3: newCard->shift = SHIFT_EVENING;      break;
-        case 4: newCard->shift = SHIFT_ALWAYS;      break;
-        default:
-            printf("Invalid choice, defaulting to Morning shift.\n");
-            newCard->shift = SHIFT_MORNING;
-            break;
-    }
-    
-    
 }
 
 
@@ -81,16 +65,16 @@ int main(){
     printf("No cards found on disk — loading default 10 cards.\n");
 
     Card defaultCards[10] = {
-        {1, 201312, true, SHIFT_ALWAYS},
-        {2, 201401, true, SHIFT_MORNING},
-        {3, 201402, false, SHIFT_MORNING},
-        {4, 201403, true, SHIFT_AFTERNOON},
-        {5, 201404, true, SHIFT_AFTERNOON},
-        {6, 201405, false, SHIFT_EVENING},
-        {7, 201406, true, SHIFT_EVENING},
-        {8, 201407, false, SHIFT_MORNING},
-        {9, 201408, true, SHIFT_AFTERNOON},
-        {10, 201409, true, SHIFT_EVENING}
+        {0000, 201213, true, SHIFT_ALWAYS},
+        {0001, 200114, true, SHIFT_MORNING},
+        {0010, 200214, false, SHIFT_MORNING},
+        {0011, 200314, true, SHIFT_AFTERNOON},
+        {0100, 200414, true, SHIFT_AFTERNOON},
+        {0101, 200514, false, SHIFT_EVENING},
+        {0110, 200614, true, SHIFT_EVENING},
+        {0111, 200714, false, SHIFT_MORNING},
+        {1000, 200814, true, SHIFT_AFTERNOON},
+        {1001, 200914, true, SHIFT_EVENING}
     };
 
     listOfCards.count = 10;
@@ -211,7 +195,7 @@ int main(){
                     printf("Card %d FOUND, but NO ACCESS at this time.\n",
                         foundCard->cardNumber);
 
-                    printf("CURRENTLY LAMP IS: Red\n");
+                    printf("CURRENTLY LAMP IS: "COLOR_RED  "Red" COLOR_RESET" \n");
                 }
 
                 break;
