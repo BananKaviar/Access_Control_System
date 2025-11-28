@@ -33,8 +33,9 @@ void createNew(Card *newCard){
 
 
     if (newCard->accessStatus) {
-    
-    GetInputInt("Enter time shift (HHMM-HHMM): ", &newCard->shift);
+        int shiftInput = 0;
+        GetInputInt("Enter time shift (HHMM-HHMM): ", &shiftInput);
+        newCard->shift = (TimeShift)shiftInput;
     } else {
     
     newCard->shift = 0;
@@ -95,7 +96,7 @@ int main(){
     listOfCards.count = 10;
     listOfCards.allCards = malloc(sizeof(Card) * 10);
     memcpy(listOfCards.allCards, defaultCards, sizeof(defaultCards));
-}
+ }
 
 
     while(true){
@@ -128,23 +129,23 @@ int main(){
              createNew(&tmp);
 
             int found = -1;
-            for (int i = 0; i < listOfCards.count; i++) {
-                if (listOfCards.allCards[i].cardNumber == tmp.cardNumber) {
+            for (int i = 0; i < listOfCards.count; i++){
+                if (listOfCards.allCards[i].cardNumber == tmp.cardNumber){
                     found = i;
                     break;
                 }
             }
 
-                if (found != -1) {
+                if (found != -1){
                     
-                    listOfCards.allCards[found].accessStatus = tmp.accessStatus;
+                 listOfCards.allCards[found].accessStatus = tmp.accessStatus;
 
-                    printf("Updated card %d: access is now %s.\n",
+                 printf("Updated card %d: access is now %s.\n",
                         tmp.cardNumber,
                         listOfCards.allCards[found].accessStatus ? "ON" : "OFF");
                 } else {
       
-                    if (listOfCards.count == 0) {
+                 if (listOfCards.count == 0) {
                         listOfCards.allCards = (Card*)malloc(sizeof(Card));
                     } else {
                         int newSize = (listOfCards.count + 1) * (int)sizeof(Card);
@@ -157,17 +158,17 @@ int main(){
                     printf("Added card %d. Employee count: %d\n", tmp.cardNumber, listOfCards.count);
                 }
                 break;
-                }
+            }
 
             case 2:
               printf("List all\n");
 
-                for (int i = 0; i < listOfCards.count; i++) {
-                Card c = listOfCards.allCards[i];
+             for (int i = 0; i < listOfCards.count; i++) {
+             Card c = listOfCards.allCards[i];
 
             printf("Number: %d\n", c.cardNumber);
             printf("Creation date: %d\n", c.creationDate);
-                }
+            }
 
             printf("The employee count: %d\n", listOfCards.count);
 
