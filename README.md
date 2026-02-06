@@ -93,4 +93,4 @@ It is not intended for real-world security use, but to *demonstrate understandin
 
 ## Author
 Developed as part of the IoT and Embedded Systems Development program.
->This is the first creating a ReadMe file and also used this as an oppurtunity to pratice Markdown. 
+>This is my first time creating a ReadMe file so I have used this as an oppurtunity to pratice Markdown as well. 
